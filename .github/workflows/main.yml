@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v3
     - name: Build (GCC)
       id: makepkg
-      uses: CachyOS/ pkgbuild-action@master
+      uses: CachyOS/pkgbuild-action@master
       with:
         envvars: CFLAGS="-march=silvermont -pipe"
         pkgdir: "./"
