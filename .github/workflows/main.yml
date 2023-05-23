@@ -1,0 +1,24 @@
+name: Build and lint
+on:
+  push:
+    paths:
+      - 'PKGBUILD'
+      - '.github/workflows/main.yml'
+  workflow_dispatch:
+jobs:
+  cosmic-epoch-git:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Build (GCC)
+      id: makepkg
+      uses: CachyOS/ pkgbuild-action@master
+      with:
+        envvars: CFLAGS="-march=silvermont -pipe"
+        pkgdir: "./"
+        namcapExcludeRules: "invalidstartdir"
+        makepkgArgs: "--skipchecksums --skippgpcheck --noconfirm -s"
+    - uses: actions/upload-artifact@v3
+      with:
+        path: "./*.zst"
